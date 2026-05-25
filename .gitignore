@@ -2,6 +2,5 @@ venv/
 .env
 __pycache__/
 *.pyc
-*.pkl
 dataset/converted.csv
 dataset/train_fabric_final.csv
