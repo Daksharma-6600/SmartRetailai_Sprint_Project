@@ -9,9 +9,7 @@ import pandas as pd
 import numpy as np
 import joblib
 
-# =========================
-# CREATE FASTAPI APP
-# =========================
+
 
 app = FastAPI(
     title="Smart Retail AI Assistant",
@@ -25,9 +23,7 @@ BASE_DIR = os.path.dirname(
     )
 )
 
-# =========================
-# LOAD TRAINED MODEL
-# =========================
+
 MODEL_PATH = os.path.join(
     BASE_DIR,
     "models",
@@ -48,9 +44,7 @@ model_columns = joblib.load(
     COLUMN_PATH
 )
 
-# =========================
-# INPUT SCHEMA
-# =========================
+
 
 class SalesInput(BaseModel):
 
@@ -74,9 +68,7 @@ class SalesInput(BaseModel):
     Sub_Category: str
 
 
-# =========================
-# HOME ROUTE
-# =========================
+
 
 @app.get("/")
 def home():
@@ -86,9 +78,7 @@ def home():
     }
 
 
-# =========================
-# SALES PREDICTION API
-# =========================
+
 
 @app.post("/predict")
 def predict_sales(data: SalesInput):
@@ -164,13 +154,7 @@ def predict_sales(data: SalesInput):
         }
 
 
-# =========================
-# ANALYTICS API
-# =========================
 
-# =========================
-# ANALYTICS API
-# =========================
 
 @app.get("/analytics")
 def analytics():
@@ -238,9 +222,6 @@ def analytics():
         }
 
 
-# =========================
-# FILE UPLOAD API
-# =========================
 
 @app.post("/upload")
 async def upload_file(
@@ -275,17 +256,12 @@ async def upload_file(
     }
 
 
-# =========================
-# CHAT REQUEST MODEL
-# =========================
+
 
 class ChatRequest(BaseModel):
     message: str
 
 
-# =========================
-# CHAT API
-# =========================
 
 @app.post("/chat")
 def chatbot(request: ChatRequest):
@@ -316,9 +292,6 @@ def chatbot(request: ChatRequest):
         }
 
 
-# =========================
-# PREDICTION HISTORY API
-# =========================
 
 @app.get("/prediction-history")
 def prediction_history():
@@ -343,9 +316,6 @@ def prediction_history():
     return records
 
 
-# =========================
-# CHAT HISTORY API
-# =========================
 
 @app.get("/chat-history")
 def chat_history():

@@ -10,15 +10,15 @@ from langchain_community.vectorstores import FAISS
 from langchain_community.embeddings import HuggingFaceEmbeddings
 from backend.anomaly_detection import detect_anomalies
 
-# =========================
+
 # LOAD ENV VARIABLES
-# =========================
+
 
 load_dotenv()
 
-# =========================
+
 # LOAD DATASET
-# =========================
+
 
 BASE_DIR = os.path.dirname(
     os.path.dirname(
@@ -34,9 +34,9 @@ DATA_PATH = os.path.join(
 
 df = pd.read_csv(DATA_PATH)
 
-# =========================
+
 # LOAD ML MODEL
-# =========================
+
 
 MODEL_PATH = os.path.join(
     BASE_DIR,
@@ -58,9 +58,8 @@ model_columns = joblib.load(
     COLUMN_PATH
 )
 
-# =========================
 # AZURE OPENAI CONFIG
-# =========================
+
 
 llm = AzureChatOpenAI(
 
@@ -75,17 +74,17 @@ llm = AzureChatOpenAI(
     temperature=0
 )
 
-# =========================
+
 # LOAD EMBEDDINGS
-# =========================
+
 
 embeddings = HuggingFaceEmbeddings(
     model_name="sentence-transformers/all-MiniLM-L6-v2"
 )
 
-# =========================
+
 # LOAD FAISS VECTOR DB
-# =========================
+
 
 FAISS_PATH = os.path.join(
     BASE_DIR,
@@ -99,9 +98,9 @@ db = FAISS.load_local(
     allow_dangerous_deserialization=True
 )
 
-# =========================
+
 # FORECAST AGENT
-# =========================
+
 
 def forecast_agent():
 
@@ -159,9 +158,9 @@ def forecast_agent():
         float(round(prediction, 2))
     }
 
-# =========================
+
 # ANALYTICS AGENT
-# =========================
+
 
 def analytics_agent():
 
@@ -228,9 +227,9 @@ def anomaly_agent():
 
     return result
 
-# =========================
+
 # DOCUMENT / RAG AGENT
-# =========================
+
 
 def document_agent(query):
 
@@ -260,17 +259,17 @@ QUESTION:
 
     return response.content
 
-# =========================
+
 # QUERY ROUTER
-# =========================
+
 
 def route_query(user_query):
 
     query = user_query.lower()
 
-    # =====================
+    
     # ANOMALY ROUTE
-    # =====================
+    
 
     if any(keyword in query for keyword in [
 
@@ -308,9 +307,9 @@ Keep the answer short and professional.
 
         return llm.invoke(prompt).content
 
-    # =====================
+    
     # FORECAST ROUTE
-    # =====================
+   
 
     elif "forecast" in query or "predict" in query:
 
@@ -331,9 +330,9 @@ Explain the prediction in simple business terms.
 
         return llm.invoke(prompt).content
 
-    # =====================
+    
     # ANALYTICS ROUTE
-    # =====================
+    
 
     elif any(keyword in query for keyword in [
 
@@ -385,19 +384,17 @@ Give a short and accurate business answer.
 
         return llm.invoke(prompt).content
 
-    # =====================
+    
     # DOCUMENT / RAG ROUTE
-    # =====================
-
+    
     else:
 
         print("DOCUMENT AGENT TRIGGERED")
 
         return document_agent(user_query)
 
-# =========================
+
 # MASTER AGENT
-# =========================
 
 def master_agent(user_query):
 

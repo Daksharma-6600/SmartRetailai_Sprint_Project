@@ -8,9 +8,9 @@ from langchain_community.embeddings import HuggingFaceEmbeddings
 
 import os
 
-# =========================
+
 # LOAD PDF DOCUMENTS
-# =========================
+
 
 documents = []
 
@@ -30,9 +30,9 @@ for file in os.listdir(pdf_folder):
 
 print("PDFs Loaded Successfully")
 
-# =========================
+
 # TEXT SPLITTING
-# =========================
+
 
 text_splitter = RecursiveCharacterTextSplitter(
     chunk_size=500,
@@ -43,17 +43,17 @@ texts = text_splitter.split_documents(documents)
 
 print("Text Chunks Created")
 
-# =========================
+
 # EMBEDDINGS
-# =========================
+
 
 embeddings = HuggingFaceEmbeddings(
     model_name="sentence-transformers/all-MiniLM-L6-v2"
 )
 
-# =========================
+
 # VECTOR DATABASE
-# =========================
+
 
 vectorstore = FAISS.from_documents(
     texts,
@@ -62,9 +62,9 @@ vectorstore = FAISS.from_documents(
 
 print("FAISS Vector Store Created")
 
-# =========================
+
 # SAVE VECTORSTORE
-# =========================
+
 
 vectorstore.save_local("faiss_index")
 

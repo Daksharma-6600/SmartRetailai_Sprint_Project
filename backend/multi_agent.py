@@ -2,27 +2,23 @@ import pandas as pd
 import numpy as np
 import joblib
 
-# =========================
-# LOAD DATA
-# =========================
+
 
 df = pd.read_csv("../dataset/train.csv")
 
-# =========================
 # LOAD MODEL
-# =========================
 
 model = joblib.load("../models/sales_forecast_model.pkl")
 
-# =========================
+
 # LOAD TRAINING COLUMNS
-# =========================
+
 
 model_columns = joblib.load("../models/model_columns.pkl")
 
-# =========================
+
 # FORECAST AGENT
-# =========================
+
 
 def forecast_agent():
 
@@ -80,39 +76,33 @@ def forecast_agent():
         float(round(prediction, 2))
     }
 
-# =========================
-# ANALYTICS AGENT
-# =========================
 
-# =========================
-# ANALYTICS AGENT
-# =========================
 
 def analytics_agent(query=None):
 
     insights = {}
 
-    # =========================
+    
     # TOTAL SALES
-    # =========================
+    
 
     insights["Total Sales"] = round(
         df["Sales"].sum(),
         2
     )
 
-    # =========================
+   
     # AVERAGE SALES
-    # =========================
+   
 
     insights["Average Sales"] = round(
         df["Sales"].mean(),
         2
     )
 
-    # =========================
+    
     # TOP CATEGORY
-    # =========================
+    
 
     insights["Top Category"] = (
         df.groupby("Category")["Sales"]
@@ -120,9 +110,9 @@ def analytics_agent(query=None):
         .idxmax()
     )
 
-    # =========================
+ 
     # TOP REGION
-    # =========================
+   
 
     insights["Top Region"] = (
         df.groupby("Region")["Sales"]
@@ -130,9 +120,9 @@ def analytics_agent(query=None):
         .idxmax()
     )
 
-    # =========================
+   
     # TOP CUSTOMER SEGMENT
-    # =========================
+    
 
     insights["Top Segment"] = (
         df.groupby("Segment")["Sales"]
@@ -140,9 +130,9 @@ def analytics_agent(query=None):
         .idxmax()
     )
 
-    # =========================
+    
     # MOST USED SHIPPING MODE
-    # =========================
+  
 
     insights["Most Used Ship Mode"] = (
         df["Ship Mode"]
@@ -150,9 +140,9 @@ def analytics_agent(query=None):
         .idxmax()
     )
 
-    # =========================
+ 
     # PEAK SALES MONTH
-    # =========================
+    
 
     df["Order Date"] = pd.to_datetime(
         df["Order Date"],
@@ -172,10 +162,9 @@ def analytics_agent(query=None):
         peak_month
     )
 
-    # =========================
+    
     # UNDERPERFORMING PRODUCT
-    # =========================
-
+    
     low_product = (
         df.groupby("Product Name")["Sales"]
         .sum()
@@ -186,9 +175,9 @@ def analytics_agent(query=None):
 
     return insights
 
-# =========================
+
 # DOCUMENT AGENT
-# =========================
+
 
 def document_agent():
 
@@ -198,9 +187,9 @@ def document_agent():
         "RAG Chatbot Ready"
     }
 
-# =========================
+
 # TEST AGENTS
-# =========================
+
 
 print("\nForecast Agent\n")
 print(forecast_agent())

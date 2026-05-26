@@ -7,9 +7,9 @@ from backend.orchestrator import (
 
 )
 
-# =======================
+
 # FORECAST AGENT
-# =======================
+
 
 @patch(
 "backend.orchestrator.model"
@@ -37,9 +37,9 @@ def test_forecast(
     )
 
 
-# =======================
+
 # ANALYTICS AGENT
-# =======================
+
 
 def test_analytics_agent():
 
@@ -62,9 +62,9 @@ def test_analytics_agent():
     )
 
 
-# =======================
+
 # ROUTER
-# =======================
+
 
 @patch(
 "backend.orchestrator.analytics_agent"

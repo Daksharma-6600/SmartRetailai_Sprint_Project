@@ -1,9 +1,9 @@
 import pandas as pd
 import numpy as np
 
-# =========================
+
 # LOAD RAW DATA SAFELY
-# =========================
+
 df = pd.read_csv(
     "dataset/train.csv",
     dtype=str,              # force everything as string first
@@ -14,9 +14,9 @@ df = pd.read_csv(
 
 print("Raw data loaded:", df.shape)
 
-# =========================
+
 # CLEAN COLUMN NAMES
-# =========================
+
 df.columns = (
     df.columns
     .str.strip()
@@ -24,9 +24,9 @@ df.columns = (
     .str.replace("-", "_", regex=False)
 )
 
-# =========================
+
 # CLEAN PRODUCT NAME
-# =========================
+
 if "Product_Name" in df.columns:
     df["Product_Name"] = (
         df["Product_Name"]
@@ -36,9 +36,9 @@ if "Product_Name" in df.columns:
         .str.strip()
     )
 
-# =========================
-# CLEAN SALES COLUMN (MOST IMPORTANT)
-# =========================
+
+# CLEAN SALES COLUMN 
+
 df["Sales"] = pd.to_numeric(df["Sales"], errors="coerce")
 
 # remove invalid sales rows
@@ -48,23 +48,23 @@ after = df.shape[0]
 
 print(f"Removed {before - after} invalid Sales rows")
 
-# =========================
+
 # OPTIONAL: CLEAN OTHER NUMERIC COLUMNS
-# =========================
+
 numeric_cols = ["Quantity", "Discount", "Profit"]
 
 for col in numeric_cols:
     if col in df.columns:
         df[col] = pd.to_numeric(df[col], errors="coerce")
 
-# =========================
+
 # DROP FULLY EMPTY ROWS
-# =========================
+
 df = df.dropna(how="all")
 
-# =========================
+
 # FINAL SANITY CHECK
-# =========================
+
 print("\nDATA TYPES AFTER CLEANING:\n")
 print(df.dtypes)
 
@@ -74,9 +74,9 @@ print(df["Sales"].head())
 print("\nNULL CHECK:\n")
 print(df.isnull().sum())
 
-# =========================
-# SAVE CLEAN FILE (FABRIC READY)
-# =========================
+
+# SAVE CLEAN FILE 
+
 output_path = "dataset/train_fabric_final.csv"
 
 df.to_csv(

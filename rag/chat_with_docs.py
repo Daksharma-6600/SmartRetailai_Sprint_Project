@@ -7,9 +7,8 @@ import os
 
 from dotenv import load_dotenv
 
-# =========================
 # AZURE OPENAI CONFIG
-# =========================
+
 
 
 load_dotenv()
@@ -24,17 +23,17 @@ client = AzureOpenAI(
     azure_endpoint=os.getenv("AZURE_OPENAI_ENDPOINT")
 )
 DEPLOYMENT_NAME = os.getenv("AZURE_OPENAI_DEPLOYMENT")
-# =========================
+
 # LOAD EMBEDDINGS
-# =========================
+
 
 embeddings = HuggingFaceEmbeddings(
     model_name="sentence-transformers/all-MiniLM-L6-v2"
 )
 
-# =========================
+
 # LOAD FAISS DATABASE
-# =========================
+
 
 db = FAISS.load_local(
     "faiss_index",
@@ -44,9 +43,9 @@ db = FAISS.load_local(
 
 print("Azure RAG Chatbot Ready")
 
-# =========================
+
 # CHAT LOOP
-# =========================
+
 
 while True:
 
@@ -56,27 +55,27 @@ while True:
 
         break
 
-    # =========================
+    
     # RETRIEVE DOCUMENTS
-    # =========================
+    
 
     docs = db.similarity_search(
         query,
         k=3
     )
 
-    # =========================
+    
     # CREATE CONTEXT
-    # =========================
+    
 
     context = "\n\n".join(
 
         [doc.page_content for doc in docs]
     )
 
-    # =========================
+    
     # FINAL PROMPT
-    # =========================
+    
 
     prompt = f"""
 
@@ -92,9 +91,9 @@ while True:
 
     """
 
-    # =========================
+    
     # GENERATE RESPONSE
-    # =========================
+    
 
     response = client.chat.completions.create(
 

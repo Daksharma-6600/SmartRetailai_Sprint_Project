@@ -7,9 +7,9 @@ from backend.main import app
 
 client = TestClient(app)
 
-# =========================
+
 # HOME ENDPOINT
-# =========================
+
 
 def test_home():
 
@@ -24,9 +24,9 @@ def test_home():
     }
 
 
-# =========================
+
 # PREDICT ENDPOINT
-# =========================
+
 
 @patch("backend.main.prediction_collection")
 @patch("backend.main.model")
@@ -80,9 +80,9 @@ def test_predict(
     mock_collection.insert_one.assert_called_once()
 
 
-# =========================
+
 # ANALYTICS ENDPOINT
-# =========================
+
 
 @patch("backend.main.pd.read_csv")
 def test_analytics(
@@ -128,9 +128,9 @@ def test_analytics(
     assert result["top_category"] == "Technology"
 
 
-# =========================
+
 # CHAT ENDPOINT
-# =========================
+
 
 @patch("backend.main.chat_collection")
 @patch("backend.main.master_agent")
@@ -175,9 +175,9 @@ def test_chat(
     mock_chat.insert_one.assert_called_once()
 
 
-# =========================
+
 # PREDICTION HISTORY
-# =========================
+
 
 @patch(
 "backend.main.prediction_collection"
@@ -221,9 +221,9 @@ def test_prediction_history(
     ) == 1
 
 
-# =========================
+
 # CHAT HISTORY
-# =========================
+
 
 @patch(
 "backend.main.chat_collection"
@@ -263,9 +263,9 @@ def test_chat_history(
     ) == 1
 
 
-# =========================
+
 # FILE UPLOAD
-# =========================
+
 
 from unittest.mock import patch, mock_open
 from io import BytesIO
